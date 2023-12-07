@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MvvmGuia.Vistas.Pokemon.Listapokemon"
+             NavigationPage.HasNavigationBar="false">
+    <Grid RowDefinitions="80,*"
+          BackgroundColor="#F5F6F6">
+        <Label Text="POKEDEX"
+               HorizontalOptions="Center"
+               VerticalOptions="Center"
+               FontSize="30"
+               FontAttributes="Bold"
+               TextColor="#FD8298"/>
+        <CollectionView BackgroundColor="#EAEDEC"
+                        Grid.Row="1"
+                        ItemsSource="{Binding Listapokemon}"
+                        Margin="0,0,0,0"
+                        x:Name="lista">
+            <CollectionView.ItemsLayout>
+                <GridItemsLayout Orientation="Vertical"
+                                 Span="2"
+                                 HorizontalItemSpacing="10"
+                                 VerticalItemSpacing="10"/>
+            </CollectionView.ItemsLayout>
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Grid RowDefinitions="90,*"
+                          Margin="0,10,0,0">
+                        <Frame Grid.Row="1" 
+                               WidthRequest="220"
+                               HorizontalOptions="Center"
+                               CornerRadius="15"
+                               Margin="10,-47,10,0"
+                               BackgroundColor="{Binding Colorfondo}">
+                            <StackLayout Margin="0,100,0,0">
+                                <Label Text="{Binding Nroorden}"
+                                       CharacterSpacing="1"
+                                       FontSize="15"
+                                       TextColor="Black"/>
+                                <Label Text="{Binding Nombre}"
+                                       CharacterSpacing="1"
+                                       FontSize="20"
+                                       FontAttributes="Bold"
+                                       TextColor="Black"
+                                       Margin="0,0,0,10"/>
+                                <Button Text="{Binding Poder}"
+                                        CornerRadius="30"
+                                        FontAttributes="Bold"
+                                        HorizontalOptions="Start"
+                                        TextTransform="None"
+                                        HeightRequest="40"
+                                        TextColor="Black"
+                                        BackgroundColor="{Binding Colorpoder}"
+                                        Command="{Binding Path=BindingContext.IradetalleCommand, Source={x:Reference lista}}"
+                                        CommandParameter="{Binding .}"/>
+                            </StackLayout>
+                        </Frame>
+                        <!--RowSpan significa cuantas filas invadira
+                            Osea cuantas se pondra por encima -->
+                        <Image Source="{Binding Icono}"
+                               Grid.RowSpan="2"
+                               HeightRequest="130"
+                               VerticalOptions="StartAndExpand"
+                               Margin="0,20,0,0"/>
+                        <Grid.GestureRecognizers>
+                            <!--Se hace porque esta dentro de un CollectionView-->
+                            <TapGestureRecognizer Command="{Binding Path=BindingContext.IradetalleCommand, Source={x:Reference lista}}"
+                                                      CommandParameter="{Binding .}"/>
+                        </Grid.GestureRecognizers>
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <Button Text="+"
+                Grid.Row="1"
+                HeightRequest="80"
+                WidthRequest="80"
+                VerticalOptions="End"
+                HorizontalOptions="End"
+                CornerRadius="50"
+                Margin="15"
+                FontSize="40"
+                FontAttributes="Bold"
+                BackgroundColor="#F5CA55"
+                TextColor="Black"
+                Command="{Binding IraregistroCommand}"/>
+    </Grid>
+</ContentPage>
